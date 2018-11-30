@@ -239,13 +239,6 @@ class IndexHome extends Component {
             this.cekGrid()
             
           }
-         <Button
-         onPress={
-           ()=> console.log(this.props.itemdel)
-         }
-         >
-           <Text>Cek</Text>
-         </Button>
         </Content>
         <Footer style={Style.footer}>
           <Left style={{ alignContent :'center', alignItems :'center', justifyContent : 'center' }}>

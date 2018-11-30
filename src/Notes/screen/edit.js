@@ -91,7 +91,7 @@ nowdate = new Date()
          }
         >
             <Container>
-                <Header style={Style.header}>
+                <Header style={Style.header} androidStatusBarColor="#d3d3d3">
                 <Left>
                     <TouchableOpacity
                     onPress={
