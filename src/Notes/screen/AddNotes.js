@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text , TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text , TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {
     Container, Content, Form, Textarea, Icon, Header,
     Left, Body, Right, Footer, List, ListItem, Grid, Card
   } from 'native-base'
 import { AndroidBackHandler } from 'react-navigation-backhandler';
-import {withNavigation} from 'react-navigation'
+import uuid from 'uuid'
+import axios from 'axios'
 
-
- class EditNotes extends Component {
+export default class AddNotes extends Component {
 nowdate = new Date()
-
 
   constructor(props) {
     super(props);
     this.state = {
-        id : this.props.navigation.state.params.data.id,
-        text : this.props.navigation.state.params.data.notes,
+        id : 1,
+        text : '',
         date : this.nowdate.toDateString(),
-        tanggal : ''
+        tanggal : '',
+        inputstyle : 'center'
         
     };
   }
@@ -41,6 +41,7 @@ nowdate = new Date()
  }
  
  componentDidMount(){
+   
     var month = [
         "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
         "Oktober", "November", "Desember"
@@ -55,74 +56,90 @@ nowdate = new Date()
         tanggal : tgl
     })
  }
+ 
 
- add = () => {
-    // (this.state.text == "")? 
-    // this.navigation.pop() :
-    // this.props.editNote(this.state.id,this.state.date, this.state.text)
-    // this.setState({
-    //     id : this.state.id + 1,
-    //     text : ''
-    // })
-    this.navigation.pop()
+ addNoteButtonClose = () => {    
+    if(this.state.text == ''){
+        this.props.navigation.navigate('Notes') 
+    }else{
+        let dataNote = {
+            id : uuid(),
+            notes : this.state.text,
+            date : this.nowdate
+        }
+        const self =this    
+        this.props.addNote(dataNote).then(() => {
+            this.props.navigation.navigate('Notes') 
+        })   
+        
+    }        
+    
  }
- navigation = this.props.navigation
- addclose = () => {
-    (this.state.text == "")? 
-    this.navigation.pop() :
-    this.props.editNote(this.state.id,this.state.date, this.state.text)
-    this.setState({
-        id : this.state.id,
-        text : ''
-    })
-    this.navigation.pop()
+ 
+ addNoteBackHandler = () => {   
+    if(this.state.text == ''){
+        this.props.navigation.navigate('Notes') 
+    }else{
+        let dataNote = {
+            id : uuid(),
+            notes : this.state.text,
+            date : this.nowdate
+        }
+        const self =this    
+        this.props.addNote(dataNote).then(() => {
+            this.props.navigation.navigate('Notes') 
+        })   
+        
+    }  
     return true
+    
 }
 
 
 
   render() {
-    const data = this.props.navigation.state.params.data
-
+      
     return (
+        
         <AndroidBackHandler
          onBackPress={
-             ()=> this.addclose()
+             ()=> this.addNoteBackHandler()
          }
         >
+            {this.props.data.isLoading==true ? <ActivityIndicator /> : null}
             <Container>
-                <Header style={Style.header} androidStatusBarColor="#d3d3d3">
-                <Left>
-                    <TouchableOpacity
+                <Header style={styles.header} androidStatusBarColor="#d3d3d3">
+                <TouchableOpacity
                     onPress={
-                        () => this.addclose()
+                        () => this.addNoteButtonClose()
                     }
                     >
-                    <Icon name="ios-arrow-back" style={Style.IconHeader} />
-                    </TouchableOpacity>
-                </Left>
+                    <Left>                  
+                        <Icon name="ios-arrow-back" style={styles.IconHeader} />
+                        
+                    </Left>
+                </TouchableOpacity>
                 <Right>
                 <TouchableOpacity
                     onPress={
                         () => alert('aw aw aw ')
                     }
                 >
-                    <Icon name="share" style={Style.fontHeader} />
+                    <Icon name="share" style={styles.fontHeader} />
                     </TouchableOpacity>
                 </Right>
                 </Header>
                 <Content>
                     <Form>
-                    <Textarea 
-                           style={{textAlign : 'left',}}
+                        <Textarea 
+                            style={{textAlign : this.state.inputstyle}}
+                            onFocus={() => this.setState({inputstyle : 'left', tanggal : ''})}
                             rowSpan={500}
-                            value={this.state.text}
                             onChangeText = {
                                 (text) => this.setState({
                                     text : text
                                 })
                             }
-                            
                             placeholder={this.state.tanggal}
                             
                         />
@@ -134,7 +151,7 @@ nowdate = new Date()
     );
   }
 }
-const Style = StyleSheet.create({
+const styles = StyleSheet.create({
     header : {
       justifyContent : 'center',
       padding : 5,
@@ -167,6 +184,3 @@ const Style = StyleSheet.create({
       backgroundColor: "#d3d3d3",
       }
   })
-
-
-  export default withNavigation(EditNotes)

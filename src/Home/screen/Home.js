@@ -80,10 +80,10 @@ class IndexHome extends Component {
   renderItem = ({item, index}) => {
     const dt = this.formatDate(item.date)    
     return(
-      <Card style={{ width : '45%', borderRadius : 20 , padding : 10}} key={index}>
+      <Card style={{ width : '45%', borderRadius : 20 , padding : 10, marginLeft : 10, marginRight : 10}} key={index}>
           <View style={{ flex: 1, }} >
             <View style={{ flex: 1,alignItems : 'center', justifyContent : 'center'  }}>
-                <Text numberOfLines={4}>
+                <Text numberOfLines={1}>
                   {item.notes}
                 </Text>
             </View>
@@ -126,11 +126,12 @@ class IndexHome extends Component {
   cekGrid = ()=> {
     if(this.state.grid == true){
       return(
-          <FlatList style={{ alignItems : 'center' }}
+          <FlatList style={{ alignItems : 'center' , paddingLeft : 15, paddingRight : 15}}
           data={this.props.data}
           style={{ flex:1, marginVertical :20 }}
           renderItem={this.renderItem}
           numColumns={2}
+          keyExtractor={(item, index) => index.toString()}
           />
         )
     }else{
@@ -215,22 +216,30 @@ class IndexHome extends Component {
           </Left>
           <Right>
             {
-              (this.state.deletelist == false)?
-                <TouchableOpacity
-                  onPress={()=>this.visedit()}
-                >
-                  <Text style={Style.fontHeader}  >
-                    Edit
-                  </Text>
-                </TouchableOpacity>
-               :
-                <TouchableOpacity
-                  onPress={()=>this.desedit()}
-                >
-                  <Text style={Style.fontHeader}  >
-                    Batal
-                  </Text>
-                </TouchableOpacity>
+              (this.props.data.length >0)?
+                (this.state.deletelist == false)?
+                  <TouchableOpacity
+                    onPress={()=>this.visedit()}
+                  >
+                    <Text style={Style.fontHeader}  >
+                      Edit
+                    </Text>
+                  </TouchableOpacity>
+                :
+                  <TouchableOpacity
+                    onPress={()=>this.desedit()}
+                  >
+                    <Text style={Style.fontHeader}  >
+                      Batal
+                    </Text>
+                  </TouchableOpacity>
+                :
+                <Text style={{color : '#f79854',fontSize : 20,
+                  fontWeight :'bold',
+                  textAlign : 'center',
+                  justifyContent : 'center'}}  >
+                  Edit
+                </Text>
             }
           </Right>
         </Header>

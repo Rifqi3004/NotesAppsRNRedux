@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text , TextInput, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text , TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {
     Container, Content, Form, Textarea, Icon, Header,
     Left, Body, Right, Footer, List, ListItem, Grid, Card
   } from 'native-base'
 import { AndroidBackHandler } from 'react-navigation-backhandler';
+import {withNavigation} from 'react-navigation'
 
-export default class IndexNotes extends Component {
+
+ class EditNotes extends Component {
 nowdate = new Date()
+
 
   constructor(props) {
     super(props);
     this.state = {
-        id : 1,
-        text : '',
+        id : this.props.navigation.state.params.data.id,
+        text : this.props.navigation.state.params.data.notes,
         date : this.nowdate.toDateString(),
-        tanggal : '',
-        inputstyle : 'center'
+        tanggal : ''
         
     };
   }
@@ -39,7 +41,6 @@ nowdate = new Date()
  }
  
  componentDidMount(){
-    
     var month = [
         "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
         "Oktober", "November", "Desember"
@@ -55,45 +56,62 @@ nowdate = new Date()
     })
  }
 
- add = () => {
-    (this.state.text == "")? 
-    this.navigation.pop() :
-    this.props.addNote(this.nowdate, this.state.text)
-    this.setState({
-        id : this.state.id + 1,
-        text : ''
-    })
-    this.navigation.pop()
+ editNoteButtonClose = () => {    
+    if(this.state.text == ''){
+        this.props.navigation.navigate('Notes') 
+    }else{
+        let dataNote = {
+            id : this.state.id,
+            notes : this.state.text,
+            date : this.nowdate
+        }
+           
+        this.props.editNote(dataNote).then(() => {
+            this.props.navigation.navigate('Notes') 
+        })   
+        
+    }        
+    
  }
- navigation = this.props.navigation
- addclose = () => {
-    (this.state.text == "")? 
-    this.navigation.pop() :
-    this.props.addNote(this.nowdate, this.state.text)
-    this.setState({
-        id : this.state.id + 1,
-        text : ''
-    })
-    this.navigation.pop()
+ 
+ editNoteBackHandler = () => {   
+    if(this.state.text == ''){
+        this.props.navigation.navigate('Notes') 
+    }else{
+        let dataNote = {
+            id : this.state.id,
+            notes : this.state.text,
+            date : this.nowdate
+        }
+           
+        this.props.editNote(dataNote).then(() => {
+            this.props.navigation.navigate('Notes') 
+        })   
+        
+    }  
+    
     return true
+    
 }
 
 
 
   render() {
-      
+    const data = this.props.navigation.state.params.data
+
     return (
         <AndroidBackHandler
          onBackPress={
-             ()=> this.addclose()
+             ()=> this.editNoteBackHandler()
          }
         >
+         {this.props.data.isLoading==true ? <ActivityIndicator /> : null}
             <Container>
                 <Header style={Style.header} androidStatusBarColor="#d3d3d3">
                 <Left>
                     <TouchableOpacity
                     onPress={
-                        () => this.add()
+                        () => this.editNoteButtonClose()
                     }
                     >
                     <Icon name="ios-arrow-back" style={Style.IconHeader} />
@@ -111,15 +129,16 @@ nowdate = new Date()
                 </Header>
                 <Content>
                     <Form>
-                        <Textarea 
-                            style={{textAlign : this.state.inputstyle}}
-                            onFocus={() => this.setState({inputstyle : 'left'})}
+                    <Textarea 
+                           style={{textAlign : 'left',}}
                             rowSpan={500}
+                            value={this.state.text}
                             onChangeText = {
                                 (text) => this.setState({
                                     text : text
                                 })
                             }
+                            
                             placeholder={this.state.tanggal}
                             
                         />
@@ -164,3 +183,6 @@ const Style = StyleSheet.create({
       backgroundColor: "#d3d3d3",
       }
   })
+
+
+  export default withNavigation(EditNotes)

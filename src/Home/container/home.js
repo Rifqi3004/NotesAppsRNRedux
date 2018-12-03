@@ -1,7 +1,6 @@
-import HomeScreen from "../../Home/screen/index"
+import HomeScreen from "../screen/Home"
 import { connect } from 'react-redux'
-import {getData , addDatas} from "../redux/actions/getdata"
-import {delNotes, delSelect, addItem, delItem} from "../redux/actions/notes"
+import {delNotes, delSelect, addItem, delItem} from "../../Public/redux/actions/home"
 const homeProps = (state) => ({
     data :state.home,
     cek : "INI PROPS CEK",

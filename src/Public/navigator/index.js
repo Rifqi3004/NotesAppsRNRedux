@@ -1,17 +1,17 @@
 import { createStackNavigator, createNavigationContainer } from 'react-navigation'
-import Home from "../container/home"
-import Note from "../container/note"
-import EditNote from "../container/edit"
+import Notes from "../../Notes/container/notes"
+import AddNotes from "../../Notes/container/addNotes"
+import EditNote from "../../Notes/container/editNote"
 
 const Stack = createStackNavigator(
     {
-        HomeScreen : {
-            screen : Home
+        Notes : {
+            screen : Notes
         },
-        NoteScreen : {
-            screen : Note
+        AddNotes : {
+            screen : AddNotes
         },
-        EditScreen : {
+        EditNote : {
             screen : EditNote
         }
     },
