@@ -23,41 +23,9 @@ nowdate = new Date()
     };
   }
 
-  getdate(){
-    var month = [
-        "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-        "Oktober", "November", "Desember"
-    ]
-    var d = new Date();
-    var h = d.getDay()
-    var n = month[d.getMonth()]
-    var y = d.getFullYear()
-    var s = d.getSeconds(), i= d.getMinutes(), h = d.getHours()
-    var tgl = `${h} ${n} ${y} ${h}:${i}:${s}`
-    this.setState({
-        tanggal : (h+" "+n+" "+y+" "+h+":"+i+":"+s)
-    })
-     
- }
- 
- componentDidMount(){
-    var month = [
-        "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-        "Oktober", "November", "Desember"
-    ]
-    var d = new Date();
-    var h = d.getDay()
-    var n = month[d.getMonth()]
-    var y = d.getFullYear()
-    var s = d.getSeconds(), i= d.getMinutes(), h = d.getHours()
-    var tgl = `${h} ${n} ${y} ${h}:${i}:${s}`
-    this.setState({
-        tanggal : tgl
-    })
- }
-
+//function close and/or save with button back
  editNoteButtonClose = () => {    
-    if(this.state.text == ''){
+    if(this.state.text == '' || this.state.text == this.props.navigation.state.params.data.notes){
         this.props.navigation.navigate('Notes') 
     }else{
         let dataNote = {
@@ -74,8 +42,9 @@ nowdate = new Date()
     
  }
  
+ //function close and/or save with back handler android
  editNoteBackHandler = () => {   
-    if(this.state.text == ''){
+    if(this.state.text == '' || this.state.text == this.props.navigation.state.params.data.notes){
         this.props.navigation.navigate('Notes') 
     }else{
         let dataNote = {
@@ -138,7 +107,7 @@ nowdate = new Date()
                                     text : text
                                 })
                             }
-                            
+                            autoFocus={true}
                             placeholder={this.state.tanggal}
                             
                         />

@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { View, Text , TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {
     Container, Content, Form, Textarea, Icon, Header,
-    Left, Body, Right, Footer, List, ListItem, Grid, Card
+    Left, Right
   } from 'native-base'
 import { AndroidBackHandler } from 'react-navigation-backhandler';
 import uuid from 'uuid'
-import axios from 'axios'
 
 export default class AddNotes extends Component {
 nowdate = new Date()
@@ -14,7 +13,6 @@ nowdate = new Date()
   constructor(props) {
     super(props);
     this.state = {
-        id : 1,
         text : '',
         date : this.nowdate.toDateString(),
         tanggal : '',
@@ -22,26 +20,9 @@ nowdate = new Date()
         
     };
   }
-
-  getdate(){
-    var month = [
-        "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-        "Oktober", "November", "Desember"
-    ]
-    var d = new Date();
-    var h = d.getDay()
-    var n = month[d.getMonth()]
-    var y = d.getFullYear()
-    var s = d.getSeconds(), i= d.getMinutes(), h = d.getHours()
-    var tgl = `${h} ${n} ${y} ${h}:${i}:${s}`
-    this.setState({
-        tanggal : (h+" "+n+" "+y+" "+h+":"+i+":"+s)
-    })
-     
- }
  
  componentDidMount(){
-   
+   //function for convert date to String
     var month = [
         "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
         "Oktober", "November", "Desember"
@@ -57,7 +38,7 @@ nowdate = new Date()
     })
  }
  
-
+//function close and/or save with button back
  addNoteButtonClose = () => {    
     if(this.state.text == ''){
         this.props.navigation.navigate('Notes') 
@@ -76,6 +57,7 @@ nowdate = new Date()
     
  }
  
+ //function save and/or close wiht back handler android
  addNoteBackHandler = () => {   
     if(this.state.text == ''){
         this.props.navigation.navigate('Notes') 

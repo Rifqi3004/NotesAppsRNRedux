@@ -20,6 +20,7 @@ class ListComponent extends React.Component{
 
    }
 
+   //function Select Item Notes for Delete
    selectedDelete(){
       (this.state.chekthis == false)?
         this.setState({chekthis : true }) &
@@ -29,6 +30,7 @@ class ListComponent extends React.Component{
       &
         this.props.dispatch(removeSelectedDelete(this.props.datalist.id))
    }
+
     render(){
         const data = this.props.datalist
         const chek = this.props.chekall

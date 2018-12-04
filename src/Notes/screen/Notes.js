@@ -7,8 +7,7 @@ import {
 } from 'native-base'
 import ListComponent from "../components/ListItem"
 import GridComponent from "../components/GridList"
-import { Col, Row, Grid } from 'react-native-easy-grid'
- 
+
 
 class Notes extends Component {
  datt = new Date()
@@ -25,7 +24,7 @@ class Notes extends Component {
     }
   }
   
-
+//function for show or hidden grid view
   changeGrid(){
     
     this.setState({
@@ -34,6 +33,7 @@ class Notes extends Component {
    
   }
   
+//function delete Item Note from list
   deleteItemNote(data){
     Alert.alert(
       'Yakin Mau Hapus Data ini?',
@@ -50,11 +50,13 @@ class Notes extends Component {
     
   }
   
+//function hide renderRightHiddenRow after click
   deleteRow = (secId, rowId, rowMap) => {
     // <<<<<<<<<<<<<<<<<<<<<<<<< CONSOLE LOG LATER FOR FIXs
     rowMap[`${secId}${rowId}`].props.closeRow();
   }
 
+//function cek view grid true or false
   cekGrid = ()=> {
     if(this.state.grid == true){
       return(
@@ -100,18 +102,21 @@ class Notes extends Component {
     }
   }
 
+//actin edit from enable edit
   enableEdit(){
     this.setState({
       deletelist : !this.state.deletelist
     })
   }
 
+//action edit from disable edit
  disableEdit(){
     this.setState({
       deletelist : false
     })
   }
 
+//action delete All notes
   deletesAllNotes(){
     Alert.alert(
       'Yakin Mau Hapus Semua Data',
@@ -128,6 +133,8 @@ class Notes extends Component {
       { cancelable: false }
     )
   }
+
+//action delete with selected item notes
   deleteSelect(){
     Alert.alert(
       'Yakin Mau Hapus Data Terpilih',
@@ -152,7 +159,7 @@ class Notes extends Component {
     
     const { navigate } = this.props.navigation
     return (
-      <Container>
+      <Container> 
         {(this.props.data.isLoding == true)? <ActivityIndicator /> : null}
         <Header style={styles.header} androidStatusBarColor="#d3d3d3">
           <Left>          
@@ -161,6 +168,21 @@ class Notes extends Component {
               </TouchableOpacity>
             
           </Left>
+          <Body>
+            {
+              (this.state.deletelist == true)?
+                <Text
+                    style={styles.fontHeader}
+                >
+                  {
+                  this.props.data.itemDelete.length+" "
+                  }
+                  Selected
+                </Text>
+              :null
+            }
+            
+          </Body>
           <Right>
             {
             
@@ -203,24 +225,29 @@ class Notes extends Component {
         </Content>
         <Footer style={styles.footer}>
           <Left style={{ alignContent :'center', alignItems :'center', justifyContent : 'center' }}>
-            <TouchableOpacity onPress=
             {
-              () => this.changeGrid()
-            }
-            
-            >
-               <View
-                style={{
-                  width : 200,
-                  alignItems : 'center'
-                }}
+              (this.state.deletelist == true)?
+               null :
+               <TouchableOpacity onPress=
+               {
+                 () => this.changeGrid()
+               }
+               
                >
-                <Icon name={
-                    (this.state.grid == false) ?
-                    'grid' : 'more'
-                  } style={styles.IconHeader} />
-               </View>
-            </TouchableOpacity>
+                  <View
+                   style={{
+                     width : 200,
+                     alignItems : 'center'
+                   }}
+                  >
+                   <Icon name={
+                       (this.state.grid == false) ?
+                       'grid' : 'more'
+                     } style={styles.IconHeader} />
+                  </View>
+               </TouchableOpacity>
+            
+            }
           </Left>
           <Body style={{ alignItems : 'center', justifyContent : 'center' }}>
             <Text style={styles.FontFooter}>

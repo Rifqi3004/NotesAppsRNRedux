@@ -1,3 +1,4 @@
+//function get date with condition
 export const formatDate = (date) => {
     var date = new Date(date);
     var today = new Date();
