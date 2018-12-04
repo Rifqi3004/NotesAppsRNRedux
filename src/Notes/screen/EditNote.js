@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text , TextInput, Button, StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native';
+import { StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {
     Container, Content, Form, Textarea, Icon, Header,
-    Left, Body, Right, Footer, List, ListItem, Grid, Card
+    Left, Right
   } from 'native-base'
 import { AndroidBackHandler } from 'react-navigation-backhandler';
 import {withNavigation} from 'react-navigation'

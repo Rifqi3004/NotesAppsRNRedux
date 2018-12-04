@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, Text, } from 'react-native'
-import { ListItem, Icon, Left, Body, Switch, Radio , CheckBox} from 'native-base'
+import { ListItem , CheckBox} from 'native-base'
 import {withNavigation} from 'react-navigation'
 import {connect} from 'react-redux'
 import { addSelectedDelete, removeSelectedDelete } from "../../Public/redux/actions/notes"
@@ -33,13 +33,10 @@ class ListComponent extends React.Component{
 
     render(){
         const data = this.props.datalist
-        const chek = this.props.chekall
         const {navigate} = this.props.navigation
         const notsplit = data.notes.split('\n');
-        const cekline = data.notes.length;
-        const self = this
         return(
-          <ListItem style={{ backgroundColor:'#f2f2f2' ,  paddingLeft : 15, paddingRight : 15}} 
+          <ListItem style={{ backgroundColor:'#fff' ,  paddingLeft : 15, paddingRight : 15}} 
           onPress={            
             () => 
             (this.props.deletelist == true)? this.selectedDelete() :
@@ -55,7 +52,9 @@ class ListComponent extends React.Component{
                   (this.props.data.itemDelete.length >0)?
                     this.state.chekthis : false
                 } 
-                onPress={()=>this.selectedDelete()} />
+                onPress={()=>this.selectedDelete()}
+                style={{backgroundColor : (this.state.chekthis == true)?'#ed6a07':'transparent', borderColor : '#ed6a07'}}
+                />
               </View>)
               :
               (<View />)

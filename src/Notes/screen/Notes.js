@@ -5,8 +5,8 @@ import {
   Container, Content, Button, Icon, Header,
   Left, Body, Right, Footer, List
 } from 'native-base'
-import ListComponent from "../components/ListItem"
-import GridComponent from "../components/GridList"
+import ListComponent from "../components/ListComponent"
+import GridComponent from "../components/GridComponent"
 
 
 class Notes extends Component {
@@ -64,7 +64,7 @@ class Notes extends Component {
           data={this.props.data.notes}
           style={{ flex:1, marginVertical :20 }}
           renderItem={({item, index}) => (
-            <GridComponent datalist={item}/>
+            <GridComponent datalist={item} deletelist={this.state.deletelist}/>
           )}
           numColumns={2}
           keyExtractor={(item, index) => index.toString()}
