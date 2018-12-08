@@ -8,6 +8,9 @@ const mapStateTorPros = (state) => ({
 const mapDispatchToProps = (dispatch )=> ({    
     addNote : (dataNote) => dispatch(addNote(dataNote)),
     editNote : (dataNote) => dispatch(editNote(dataNote)),    
+    back : () => dispatch({
+        type : 'Navigation/POP'
+    }) 
 });
 
 export default connect(mapStateTorPros, mapDispatchToProps)(AddNotes)

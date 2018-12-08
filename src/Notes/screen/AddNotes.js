@@ -69,7 +69,7 @@ nowdate = new Date()
         }
         const self =this    
         this.props.addNote(dataNote).then(() => {
-            this.props.navigation.navigate('Notes') 
+            this.props.back()
         })   
         
     }  
